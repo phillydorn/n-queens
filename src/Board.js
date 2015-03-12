@@ -97,14 +97,15 @@
 
     transpose: function() {
       var n = this.get('n');
-      var boardArray = [];    
-      for (var i = 0; i < n; i ++) {
-        boardArray[i] = [];
-        for (var j = 0; j < n; j ++){
-          boardArray[i].push(this.rows()[j][i]);
+      var board = new Board ({'n' : n }); 
+      for (var row = 0; row < n; row ++) {
+        for (var col = 0; col < n; col ++){
+          if(this.get(row)[col] === 1){
+            board.togglePiece(col, n-1-row);
+          }
         }
       }
-      return new Board(boardArray);
+      return board;
     },
     
     // COLUMNS - run from top to bottom
@@ -129,6 +130,7 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+    
       var n = this.get('n');
       // var row = this.get(r);
       var col = majorDiagonalColumnIndexAtFirstRow;
@@ -142,8 +144,7 @@
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       var newBoard = this.transpose();
-      newBoard = newBoard.transpose();
-
+      newBoard= newBoard.transpose()
       var n = this.get('n');
       for(var col = 0; col < n; col++){
         if(this.hasMajorDiagonalConflictAt(col) || newBoard.hasMajorDiagonalConflictAt(col)){

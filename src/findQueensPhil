@@ -1,0 +1,41 @@
+window.findNQueensSolution = function(n, board, row, queens) {
+  //findRooks will take row parameter
+  var board = board || new Board({'n': n});
+  var row = row || 0;
+  board.queens = queens || 0
+  //iterate through columns in row (for loop)
+  for (var cols = 0; cols < n; cols++){
+    board.togglePiece(row, cols);
+    queens++
+
+    if (!board.hasAnyQueensConflicts()) {
+      if (row !== n-1){
+        if(board.queens === row+1){
+          return findNQueensSolution(n, board, row+1, board.queens);
+        }
+        else{
+          board.togglePiece(row,cols);
+          board.queens--;
+          return findNQueensSolution(n, board, row+1, board.queens);
+        }
+      }  
+      if (queens === n && row === 0) {
+        return board.rows();
+      }
+      //if last row
+        //return solution
+    } else {
+      board.togglePiece(row, cols);
+      queens--
+    }
+
+   
+    //toggle back to 0
+  }
+
+  return board.rows();
+  /*if (queens < n) {
+     board.togglePiece(row, cols);
+    queens--
+  }*/
+};
