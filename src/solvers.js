@@ -16,8 +16,9 @@
 window.findNRooksSolution = function(n, board, row) {
   //findRooks will take row parameter
   var board = board || new Board({'n': n});
+  var row = row || 0;
   //iterate through columns in row (for loop)
-  for (var cols = 0; cols <n; cols++){
+  for (var cols = 0; cols < n; cols++){
 
     //toggle row, column to 1
     board.togglePiece(row, cols);
@@ -28,23 +29,18 @@ window.findNRooksSolution = function(n, board, row) {
       //if not last row
       if (row !== n-1){
         //findRookssolution on next row
-        findNRooksSolution(n, board, row+1)
+        return findNRooksSolution(n, board, row+1);
       } else {
+        console.log('Single solution for ' + n + ' rooks:', JSON.stringify(board.rows()));
         return board.rows();
       }
       //if last row
         //return solution
     }
-    
+
     board.togglePiece(row, cols);
     //toggle back to 0
   }
-     
-      
-  
-  
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution.rows();
 };
 
 
